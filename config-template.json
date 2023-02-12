@@ -1,0 +1,17 @@
+{
+  "pushFolder": "",
+  "pullFolder": "",
+  "sshPushBase": "",
+  "users": [
+    {
+      "email": "",
+      "name": ""
+    }
+  ],
+  "repos": [
+    {
+      "ssh": "",
+      "key": ""
+    },
+  ]
+}
