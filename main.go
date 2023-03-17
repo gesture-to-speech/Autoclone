@@ -76,32 +76,32 @@ func main() {
 		err = cloneRepo(config.PullFolder, repo.Ssh)
 		if err != nil {
 			log.Printf("Error cloning repo %s; error message: %s", repo.Ssh, err)
-			return
+			continue
 		}
 
 		gitLabRepo := config.SshPushBase + getRepoName(repo.Ssh) + ".git"
 		err = cloneRepo(config.PushFolder, gitLabRepo)
 		if err != nil {
 			log.Printf("Error cloning repo %s; error message: %s", gitLabRepo, err)
-			return
+			continue
 		}
 
 		err = fetchOrigin(config.PullFolder, repo.Ssh)
 		if err != nil {
 			log.Printf("Error fetching origin repo %s; error message: %s", repo.Ssh, err)
-			return
+			continue
 		}
 		err = fetchOrigin(config.PushFolder, gitLabRepo)
 		if err != nil {
 			log.Printf("Error fetching origin repo %s; error message: %s", gitLabRepo, err)
-			return
+			continue
 		}
 
 		log.Print("Getting branches")
 		allBranches, err := getAllBranches(config.PullFolder, repo.Ssh)
 		if err != nil {
 			log.Printf("Couldn't get all branches from repo %s; error message: %s", repo.Ssh, err)
-			return
+			continue
 		}
 
 		originRepoDir := getRepoFolder(repo.Ssh, config.PullFolder)
@@ -110,14 +110,14 @@ func main() {
 			err = setUser(config.Users, destRepoDir)
 			if err != nil {
 				log.Printf("Couldn't set user for repo %s; error message: %s", repo.Ssh, err)
-				return
+				continue
 			}
 
 			log.Printf("Copy branch %s from repo %s", branch, repo.Ssh)
 			err = copyBranch(branch, originRepoDir, destRepoDir)
 			if err != nil {
 				log.Printf("Couldn't copy branch %s from repo %s; error message: %s", branch, repo.Ssh, err)
-				return
+				continue
 			}
 		}
 	}
